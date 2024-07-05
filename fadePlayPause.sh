@@ -40,7 +40,7 @@ fade_in() {
 }
 
 
-VOLUME_THRESHOLD=0
+VOLUME_THRESHOLD=10
 CURRENT_VOLUME=$(get_volume)
 STATUS=$(playerctl status)
 
