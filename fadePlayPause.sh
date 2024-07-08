@@ -1,7 +1,8 @@
 #!/bin/bash
 
-MAX_VOLUME=90
+MAX_VOLUME=60
 MIN_VOLUME=0
+
 
 set_volume() {
 	local VOLUME=$1
@@ -18,6 +19,7 @@ fade_out() {
 	FADE_DURATION=5
 	local VOLUME=$(get_volume)
 	local STEP=$((VOLUME / FADE_DURATION))
+	echo "$VOLUME" > ~/.fadePlayPauseVol
 	for ((i = 0; i < FADE_DURATION; i++)); do
 		VOLUME=$((VOLUME - STEP))
 		set_volume $VOLUME
@@ -28,6 +30,11 @@ fade_out() {
 
 
 fade_in() {
+
+	if [ -f ~/.fadePlayPauseVol ]; then
+		MAX_VOLUME=$(cat ~/.fadePlayPauseVol)
+	fi
+
 	local FADE_DURATION=20
 	local VOLUME=$MIN_VOLUME
 	local STEP=$((MAX_VOLUME / FADE_DURATION))
